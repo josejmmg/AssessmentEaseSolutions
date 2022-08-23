@@ -27,9 +27,7 @@ namespace TechAssessmentMM
 
             string fileNameOutput = @"C:\Temp\output.txt";
 
-            //Los primeros nodos con mayor valor para buscar los nodos más significativos de 1500 a 1500-TopN
-            //por ejemplo 1500 a 1400 por ejemplo
-            int TopN = 100;
+            
 
 
             Map map = Utility.ReadFile(fileNameInput);
@@ -42,16 +40,30 @@ namespace TechAssessmentMM
             GraphMaxPath gmp = new GraphMaxPath(map.SizeX, graph, map.MapArray, map.MapList);
 
 
-            List<int[]> NodosEntrada = new List<int[]>();
+            List<int[]> NodosEntry = new List<int[]>();
 
             //Para el ejemplo 4x4 
             //NodosEntrada.Add(new int[] { 6, 9});  //indice Nodo
 
 
-            ////Una estrategia que busca solo con los de valor N más alto
-            NodosEntrada = gmp.TheMaxNodos(TopN);
+            ///Una estrategia de solo buscar  con algunos nodos de valor N más alto
+            ///al hacer varias búsquedas no se mejora el camino más óptimo en el nodo 
+            ///
+            ///NodoSource: 8915
+            ///Length of calculated path: 13
+            ///Drop of calculated path: 1469
+            ///Calculated path: 4 - 335 - 336 - 389 - 411 - 417 - 435 - 1055 - 1069 - 1121 - 1424 - 1461 - 1473 -
+            ///
+            ///Los primeros nodos con mayor valor para buscar los nodos más significativos
+            ///de 1500 a 1500-TopN
+            ///por ejemplo 1500 a 1475 por ejemplo
+            int TopN = 25;
+
+            //NodosEntry = gmp.TheMaxNodos(TopN, 0, 3001);
+
+            NodosEntry = gmp.TheMaxNodos(TopN, 3001 , 4000); 
             int i = 0;
-            foreach (int[] nodos in NodosEntrada)
+            foreach (int[] nodos in NodosEntry)
             {
                 if (graph[nodos[0]].Count > 0)//tiene adyacente
                 {

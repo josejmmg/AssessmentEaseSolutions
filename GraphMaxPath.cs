@@ -316,16 +316,18 @@ namespace TechAssessmentMM
         /// </summary>
         /// <param name="top"></param>
         /// <returns></returns>
-        public List<int[]> TheMaxNodos(int top)
+        public List<int[]> TheMaxNodos(int top, int min, int max)
         {
             List<int[]> candidates = new List<int[]>();//[Nodo,Valor]
 
             //Que tengan un valor con almenos un adyacente
-            candidates = this.MapList.Where(item => item[1]<= 1500 && item[1] < 1500 - top 
+            candidates = this.MapList.Where(item => item[1] <= 1500 && item[1] < 1500 - top
                                             && this.Graph[item[0]].Count > 0).OrderByDescending(item => item[1]).ToList();
-            
-            
-            return candidates;
+
+            //candidates = this.MapList.Where(item => item[1] == 1473
+            //                                && this.Graph[item[0]].Count > 0).OrderByDescending(item => item[1]).ToList();
+
+            return candidates.GetRange(min,max);
         }
 
 
@@ -366,7 +368,7 @@ namespace TechAssessmentMM
             //var lista = this.lista.Where(item => item[1] == min).OrderByDescending(item => item[1]).ToList();
            
             Console.WriteLine("max{0}",min);
-            var lista = this.MapList.Where(item => item[1] == max).OrderByDescending(item => item[1]).ToList();
+            var lista = this.MapList.OrderByDescending(item => item[1]).ToList();
             
 
             return lista;
