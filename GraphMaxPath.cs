@@ -79,17 +79,19 @@ namespace TechAssessmentMM
 
             TheBestPath = BackReview(TheBestPath, nodoSource);
 
+            
 
             TheSolutions.Add(new Solutions()
             {
+                NodoSource = nodoSource,
                 Path = TheBestPath,
                 Length = TheBestPath.Count,
                 Drop = TheBestPath.Max(i => i.ValorNodo) - TheBestPath.Min(i => i.ValorNodo)
 
-            });
+            }) ;
 
+            
 
-            //Console.WriteLine("Finished");
         }
 
 
@@ -109,6 +111,7 @@ namespace TechAssessmentMM
             Item? first = final.OrderByDescending(i => i.ValorAcum).ToList().FirstOrDefault();
 
             int indice = first!.Indice;
+            
             //Console.Write("First Node: {0} - ", first.Indice);
             TheBestPathBack.Add(first);
             
@@ -159,83 +162,84 @@ namespace TechAssessmentMM
         /// <param name="nodoSource"></param>
         public void FindTheBestPath(Dictionary<int, List<int>> graph, int[,] array, int nodoSource)
         {
-            //int[] TheBestPath = new int[numOfVertices];
-            
-            this.TheBestPath = new List<Item>();
+                //int[] TheBestPath = new int[numOfVertices];
 
-            Boolean[] visitado = new Boolean[NumOfVertices];
+                this.TheBestPath = new List<Item>();
 
-            int value = ObtenerValor(nodoSource, nodoSource);
-            
-            //TheBestPath[nodoSource] = value;
+                Boolean[] visitado = new Boolean[NumOfVertices];
 
-            this.TheBestPath.Add(new Item()
-            {
-                Indice = nodoSource,
-                ValorNodo = value,
-                ValorAcum = value,
-                Visited = false
-            });
+                int value = ObtenerValor(nodoSource, nodoSource);
 
-            
+                //TheBestPath[nodoSource] = value;
 
-            //
-            //Se encuentra el mejor camino
-            //
-            for (int count = 0; count < NumOfVertices; count++)
-            {
-                Item best = FindTheBest();
-
-                visitado[best.Indice] = true;
-
-                //
-                // process adjacent nodes of the current vertex
-                //
-                foreach (int AdyacentIndex in graph[best.Indice])
+                this.TheBestPath.Add(new Item()
                 {
-                    int valueGraph = ObtenerValor(best.Indice, AdyacentIndex);
-                    int acum = best.ValorAcum + valueGraph;
+                    Indice = nodoSource,
+                    ValorNodo = value,
+                    ValorAcum = value,
+                    Visited = false
+                });
+
+
+
+                //
+                //Se encuentra el mejor camino
+                //
+                for (int count = 0; count < NumOfVertices; count++)
+                {
+                    Item best = FindTheBest();
+
+                    visitado[best.Indice] = true;
 
                     //
-                    // if vertex v not in TheBestPath then update it  
+                    // process adjacent nodes of the current vertex
                     //
-                    Item? Adyacent = TheBestPath.Where(item=>item.Indice == AdyacentIndex).FirstOrDefault();
-
-                    if (!visitado[AdyacentIndex]
-                            && valueGraph != 0
-                            && best.ValorAcum != 0
-                            && acum > best.ValorAcum)
+                    foreach (int AdyacentIndex in graph[best.Indice])
                     {
+                        int valueGraph = ObtenerValor(best.Indice, AdyacentIndex);
+                        int acum = best.ValorAcum + valueGraph;
 
-                        var TheBest = this.TheBestPath.Where(e => e.Indice == AdyacentIndex).FirstOrDefault();
+                        //
+                        // if vertex v not in TheBestPath then update it  
+                        //
+                        Item? Adyacent = TheBestPath.Where(item => item.Indice == AdyacentIndex).FirstOrDefault();
 
-                        if(TheBest == null)
+                        if (!visitado[AdyacentIndex]
+                                && valueGraph != 0
+                                && best.ValorAcum != 0
+                                && acum > best.ValorAcum)
                         {
 
-                            this.TheBestPath.Add(new Item()
+                            var TheBest = this.TheBestPath.Where(e => e.Indice == AdyacentIndex).FirstOrDefault();
+
+                            if (TheBest == null)
                             {
-                                Indice = AdyacentIndex,
-                                ValorNodo = valueGraph,
-                                ValorAcum = acum,
-                                Visited = false
-                            });
 
-                        }
-                        else
-                        {
-                            TheBest.ValorAcum = acum ;
-                            TheBest.Visited = false ;
-                        }
+                                this.TheBestPath.Add(new Item()
+                                {
+                                    Indice = AdyacentIndex,
+                                    ValorNodo = valueGraph,
+                                    ValorAcum = acum,
+                                    Visited = false
+                                });
 
-                       Console.Write("*");
+                            }
+                            else
+                            {
+                                TheBest.ValorAcum = acum;
+                                TheBest.Visited = false;
+                            }
+
+                            Console.Write("*");
+                        }
                     }
                 }
-            }
 
-            Console.WriteLine("---");
-            // print the path array 
-            PrintBestpath(nodoSource);
+                Console.WriteLine("---");
+                // print the path array 
+                PrintBestpath(nodoSource);
 
+            
         }
 
         /// <summary>
@@ -327,12 +331,12 @@ namespace TechAssessmentMM
         {
             List<int[]> candidates = new List<int[]>();
             //Nodo y Valor
+            //Que tengan un valor con almenos un adyacente
+            candidates = this.MapList.Where(item => item[1]<= 1500 && item[1] < 1500 - top && this.Graph[item[0]].Count > 0).OrderByDescending(item => item[1]).ToList();
+            //var Top100 = candidates.Take(top).ToList();
 
-            //var lista = this.lista.Where(item => item[1]!= 1499 && item[1] != 1496 && item[1] != 1485).OrderByDescending(item => item[1]).ToList();
-            var Top100 = MapList.Take(top).ToList();
 
-
-            return Top100;
+            return candidates;
         }
 
 

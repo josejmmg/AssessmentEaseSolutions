@@ -13,8 +13,8 @@ namespace TechAssessmentMM
     {
 
         public List<Item> Path = new List<Item>();
-        public int Length;
-        public int Drop;
-
+        public int Length { get; set; }
+        public int Drop { get; set; }
+        public int NodoSource { get; set; }
     }
 }
