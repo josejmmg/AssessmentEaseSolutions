@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,20 @@ namespace TechAssessmentMM
         public int[,] MapArray { get; set; }
         public List<int[]> Top { get; set; }
         public List<int[]> MapList { get; set; }
-
+        public int MaxValue {
+            get
+            { 
+                return MapList.Max(i => i[1]); 
+            }
+        }
+        public int MinValue
+        {
+            get
+            {
+                return MapList.Min(i => i[1]);
+            }
+        }
+           
         /// <summary>
         /// Constructor
         /// </summary>

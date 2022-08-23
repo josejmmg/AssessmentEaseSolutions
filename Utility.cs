@@ -97,8 +97,7 @@ namespace TechAssessmentMM
 
             map.MapArray = mapArray;
             map.MapList = lista;
-
-
+     
             return map;
         }
 

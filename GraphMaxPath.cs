@@ -129,7 +129,7 @@ namespace TechAssessmentMM
                 foreach (Item item in next)
                 {
                     //Console.WriteLine("indice:{0}, value:{1}, acum:{2}", first[0], first[1], first[2]);
-                    if (ObtenerValor(item.Indice, nodo.Indice) > 0) // es adyacente válido
+                    if (GetValueVertex(item.Indice, nodo.Indice) > 0) // es adyacente válido
                     {
                         //Console.Write("{0} - ",item[1]);
                         indice = item.Indice;
@@ -168,7 +168,7 @@ namespace TechAssessmentMM
 
                 Boolean[] visitado = new Boolean[NumOfVertices];
 
-                int value = ObtenerValor(nodoSource, nodoSource);
+                int value = GetValueVertex(nodoSource, nodoSource);
 
                 //TheBestPath[nodoSource] = value;
 
@@ -196,7 +196,7 @@ namespace TechAssessmentMM
                     //
                     foreach (int AdyacentIndex in graph[best.Indice])
                     {
-                        int valueGraph = ObtenerValor(best.Indice, AdyacentIndex);
+                        int valueGraph = GetValueVertex(best.Indice, AdyacentIndex);
                         int acum = best.ValorAcum + valueGraph;
 
                         //
@@ -242,17 +242,6 @@ namespace TechAssessmentMM
             
         }
 
-        /// <summary>
-        /// Se valida si se ha visitado
-        /// </summary>
-        /// <param name="vertice"></param>
-        /// <returns></returns>
-        private bool VisitadoVertice(int vertice)
-        {
-            bool? visited;
-            visited = TheBestPath.Where(i => i.Indice == vertice).FirstOrDefault()!.Visited;
-            return visited.HasValue ? visited.Value : false;
-        }
 
         /// <summary>
         /// Se obtiene el valor válido si es adyacente
@@ -260,7 +249,7 @@ namespace TechAssessmentMM
         /// <param name="origen"></param>
         /// <param name="destino"></param>
         /// <returns></returns>
-        private int ObtenerValor(int origen, int destino)
+        private int GetValueVertex(int origen, int destino)
         {
             int value = 0;
             int PosXOrigen = (origen / SizeMapArray) % SizeMapArray;
@@ -323,19 +312,19 @@ namespace TechAssessmentMM
         }
         
         /// <summary>
-        /// Una estrategia para obtener nodos de entrada, se seleccionan el Top N y se excluyen algunmos que ya encontró
+        /// Una estrategia para obtener nodos de entrada, se seleccionan el Top N y al menos un adyacente
         /// </summary>
         /// <param name="top"></param>
         /// <returns></returns>
         public List<int[]> TheMaxNodos(int top)
         {
-            List<int[]> candidates = new List<int[]>();
-            //Nodo y Valor
+            List<int[]> candidates = new List<int[]>();//[Nodo,Valor]
+
             //Que tengan un valor con almenos un adyacente
-            candidates = this.MapList.Where(item => item[1]<= 1500 && item[1] < 1500 - top && this.Graph[item[0]].Count > 0).OrderByDescending(item => item[1]).ToList();
-            //var Top100 = candidates.Take(top).ToList();
-
-
+            candidates = this.MapList.Where(item => item[1]<= 1500 && item[1] < 1500 - top 
+                                            && this.Graph[item[0]].Count > 0).OrderByDescending(item => item[1]).ToList();
+            
+            
             return candidates;
         }
 

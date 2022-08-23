@@ -27,13 +27,16 @@ namespace TechAssessmentMM
 
             string fileNameOutput = @"C:\Temp\output.txt";
 
-            //Los primeros nodos con mayor valor para buscar los nodos más significativos
-            int TopN = 10;
+            //Los primeros nodos con mayor valor para buscar los nodos más significativos de 1500 a 1500-TopN
+            //por ejemplo 1500 a 1400 por ejemplo
+            int TopN = 100;
 
 
             Map map = Utility.ReadFile(fileNameInput);
 
-
+            //
+            // Obtiene el grafo, formado por los nodos adyacentes que cumplan la condición
+            //
             Dictionary<int, List<int>> graph = map.GetGraph();
 
             GraphMaxPath gmp = new GraphMaxPath(map.SizeX, graph, map.MapArray, map.MapList);
@@ -44,11 +47,8 @@ namespace TechAssessmentMM
             //Para el ejemplo 4x4 
             //NodosEntrada.Add(new int[] { 6, 9});  //indice Nodo
 
-            //GFG t = new GFG();
-            //t.dijkstra(graph, map.MapList, 6);
 
-
-            ////Una estrategia que  buscar solo con los de valor N más alto
+            ////Una estrategia que busca solo con los de valor N más alto
             NodosEntrada = gmp.TheMaxNodos(TopN);
             int i = 0;
             foreach (int[] nodos in NodosEntrada)
