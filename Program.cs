@@ -61,9 +61,10 @@ namespace TechAssessmentMM
             ///por ejemplo 1500 a 1475 por ejemplo
             int TopN = 50;
 
-            //NodosEntry = gmp.TheMaxNodos(TopN, 0, 3001);
+            NodosEntry = gmp.TheMaxNodos(TopN, 0, 3001);
 
-            NodosEntry = gmp.TheMaxNodos(TopN, 14001, 15000);
+            //NodosEntry = gmp.TheMaxNodos(TopN, 14001, 15000);
+            
             int i = 0;
             foreach (int[] nodos in NodosEntry)
             {
