@@ -321,7 +321,7 @@ namespace TechAssessmentMM
             List<int[]> candidates = new List<int[]>();//[Nodo,Valor]
 
             //Que tengan un valor con almenos un adyacente
-            candidates = this.MapList.Where(item => item[1] <= 1500 && item[1] < 1500 - top
+            candidates = this.MapList.Where(item => item[1] <= 1500 && item[1] > 1500 - top
                                             && this.Graph[item[0]].Count > 0).OrderByDescending(item => item[1]).ToList();
 
             //candidates = this.MapList.Where(item => item[1] == 1473

@@ -27,7 +27,7 @@ namespace TechAssessmentMM
 
             string fileNameOutput = @"C:\Temp\output.txt";
 
-            
+
 
 
             Map map = Utility.ReadFile(fileNameInput);
@@ -49,19 +49,21 @@ namespace TechAssessmentMM
             ///Una estrategia de solo buscar  con algunos nodos de valor N más alto
             ///al hacer varias búsquedas no se mejora el camino más óptimo en el nodo 
             ///
-            ///NodoSource: 8915
-            ///Length of calculated path: 13
-            ///Drop of calculated path: 1469
-            ///Calculated path: 4 - 335 - 336 - 389 - 411 - 417 - 435 - 1055 - 1069 - 1121 - 1424 - 1461 - 1473 -
+            //NodoSource: 161395
+            //Length of calculated path: 15
+            //Drop of calculated path: 1419
+            //Calculated path: 47 - 56 - 67 - 71 - 76 - 126 - 355 - 516 - 527 - 820 - 848 - 915 - 932 - 1078 - 1466 -
+
+
             ///
             ///Los primeros nodos con mayor valor para buscar los nodos más significativos
             ///de 1500 a 1500-TopN
             ///por ejemplo 1500 a 1475 por ejemplo
-            int TopN = 25;
+            int TopN = 50;
 
             //NodosEntry = gmp.TheMaxNodos(TopN, 0, 3001);
 
-            NodosEntry = gmp.TheMaxNodos(TopN, 3001 , 4000); 
+            NodosEntry = gmp.TheMaxNodos(TopN, 14001, 15000);
             int i = 0;
             foreach (int[] nodos in NodosEntry)
             {
